@@ -5,9 +5,9 @@ https://rhakenstorage.adaptable.app/main/
 
 ## Implementasi
 ### 1. Membuat proyek Django baru
-1.saya membuat _virtual environment_ dengan perintah `python -m venv env` dan mengaktifkannya dengan perintah `env\Scripts\activate.bat`.
-2.saya memasang _dependencies_ dengan perintah `pip install -r requirements.txt`.
-3.Saya membuat direktori baru bernama `rhaken_storage`, lalu menambahkan berkas `requirements.txt` di dalam direktori tersebut yang berisi:
+1.Membuat _virtual environment_ dengan perintah `python -m venv env` dan mengaktifkannya dengan perintah `env\Scripts\activate.bat`.
+2.Memasang _dependencies_ dengan perintah `pip install -r requirements.txt`.
+3.Membuat direktori baru bernama `rhaken_storage`, lalu menambahkan berkas `requirements.txt` di dalam direktori tersebut yang berisi:
 
 django
 gunicorn
