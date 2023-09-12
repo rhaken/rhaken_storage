@@ -8,14 +8,14 @@ https://rhakenstorage.adaptable.app/main/
 1.Membuat _virtual environment_ dengan perintah `python -m venv env` dan mengaktifkannya dengan perintah `env\Scripts\activate.bat`.
 2.Memasang _dependencies_ dengan perintah `pip install -r requirements.txt`.
 3.Membuat direktori baru bernama `rhaken_storage`, lalu menambahkan berkas `requirements.txt` di dalam direktori tersebut yang berisi:
-
+```
 django
 gunicorn
 whitenoise
 psycopg2-binary
 requests
 urllib3
-
+```
 Berkas itu berisi _dependencies_ yang akan digunakan.
 Lalu, saya menginstall dengan perintah `pip install -r requirements.txt`.
 
