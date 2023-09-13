@@ -1,6 +1,5 @@
 # Rhaken Storage
-Alikasi penyimpanan senjata api
-
+Alikasi penyimpanan Barang Rhaken
 https://rhakenstorage.adaptable.app/main/
 
 ## Implementasi
@@ -84,7 +83,10 @@ def show_main(request):
 ```
 
 ### 6. Melakukan _deployment_
-Pada adaptable, pilih opsi _deploy a new app_. Karena saya ingin men-_deploy_ _repository_ `rhaken_storage`, maka saya memilih _repository_ tersebut. Pilih _Python App Template_ sebagai _template deployment_. Selanjutnya adalah opsi tipe _database_, pilih PostgreSQL. Sesuaikan versi python dengan versi lokal. Dan masukan `python manage.py migrate && gunicorn rhaken_storage.wsgi` pada _Start Command_. Tentukan nama applikasi dan checklist _HTTP Listener on PORT_.
+1.Pada adaptable, pilih opsi _deploy a new app_. Karena saya memilih -_deploy_ _repository_ `rhaken_storage`. 
+2.Pilih _Python App Template_ sebagai _template deployment_. 
+3.pilih PostgreSQL. 
+4.Sesuaikan versi python dengan versi lokal. Dan masukan `python manage.py migrate && gunicorn rhaken_storage.wsgi` pada _Start Command_. Tentukan nama applikasi dan checklist _HTTP Listener on PORT_.
 
 ## Bagan
 ![basic-django](https://github.com/rhaken/rhaken_storage/assets/39646450/315ab361-b1bf-47bc-9473-178a512237c5)
@@ -98,22 +100,21 @@ Pada adaptable, pilih opsi _deploy a new app_. Karena saya ingin men-_deploy_ _r
 Fungsi _virtual environment_ adalah untuk memisahkan _packages_ dan _dependencies_ untuk setiap proyek kita, sehingga setiap proyek kita dapat menggunakan paket _Python_ yang berbeda-beda. Kita sebenarnya bisa saja membuat proyek tanpa _virtual environment_, tetapi akan sangat berisiko. Tanpa virtual environment, semua paket Python yang saya instal akan berada dalam lingkungan Python global di sistem saya. Ini dapat menyebabkan konflik jika dua proyek berbeda memerlukan versi yang berbeda dari paket yang sama. Dengan virtual environment, saya dapat mengisolasi dependensi untuk setiap proyek, mencegah konflik tersebut.
 
 ## MVC, MVT, MVVM
-Setiap pola ini memiliki pendekatan yang berbeda dalam memisahkan komponen aplikasi dan memfasilitasi pengembangan dan pemeliharaan aplikasi yang lebih baik. Pemilihan pola tergantung pada jenis aplikasi yang dikembangkan, teknologi yang digunakan, dan preferensi pengembang.
 ### 1. MVC (Model-View-Controller)
-* Model: Komponen ini mewakili data dan logika aplikasi.
-* View: Komponen ini bertanggung jawab untuk menampilkan informasi kepada pengguna dan menerima input dari mereka.
-* Control: Komponen ini bertindak sebagai penghubung antara Model dan View. Ini mengatur alur kontrol, dan mengolah input dari pengguna.
+1 Model: Komponen ini mewakili data dan logika aplikasi.
+2 View: Komponen ini bertanggung jawab untuk menampilkan informasi kepada pengguna dan menerima input dari mereka.
+3 Control: Komponen ini bertindak sebagai penghubung antara Model dan View. Ini mengatur alur kontrol, dan mengolah input dari pengguna.
 
 Pada arsitektur MVC, Model dan View biasanya tidak mengetahui satu sama lain secara langsung, dan komunikasi antara keduanya diatur melalui Controller.
 ### 2. MVT (Model-View-Template)
-* Model: Komponen ini mewakili data dan logika aplikasi.
-* View: Komponen ini adalah bagian yang menentukan apa yang harus ditampilkan kepada pengguna.
-* Template: Ini adalah bagian yang menangani tampilan HTML. Template mengambil data dari Model dan menggabungkannya dengan HTML untuk membuat tampilan yang akhir kepada pengguna.
+1 Model: Komponen ini mewakili data dan logika aplikasi.
+2 View: Komponen ini adalah bagian yang menentukan apa yang harus ditampilkan kepada pengguna.
+3 Template: Ini adalah bagian yang menangani tampilan HTML. Template mengambil data dari Model dan menggabungkannya dengan HTML untuk membuat tampilan yang akhir kepada pengguna.
 
 Pola MVT digunakan khususnya dalam pengembangan web dengan framework Django, yang secara konseptual mirip dengan pola MVC, tetapi dengan istilah yang sedikit berbeda.
 ### 3. MVVM (Model-View-ViewModel)
-* Model: Seperti dalam pola-pola lain, Model mewakili data dan logika aplikasi.
-* View: Komponen ini bertanggung jawab untuk menampilkan informasi kepada pengguna.
-* ViewModel: Ini berfungsi sebagai perantara antara Model dan View. ViewModel juga mengelola input dari pengguna dan mengirimkannya ke Model jika diperlukan.
+1 Model: Seperti dalam pola-pola lain, Model mewakili data dan logika aplikasi.
+2 View: Komponen ini bertanggung jawab untuk menampilkan informasi kepada pengguna.
+3 ViewModel: Ini berfungsi sebagai perantara antara Model dan View. ViewModel juga mengelola input dari pengguna dan mengirimkannya ke Model jika diperlukan.
 
 MVVM adalah pola arsitektur yang umum digunakan dalam pengembangan aplikasi berbasis antarmuka pengguna (UI).
