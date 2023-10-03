@@ -4,69 +4,58 @@
     <h1>Rhaken Storage</h1>
 
     <h5>Name:</h5>
-    <p>{{name}}</p>
+    <p>{{ name }}</p>
 
     <h5>Class:</h5>
-    <p>{{class}}</p>
+    <p>{{ class }}</p>
 
-    <h7>Banyak Jenis Item : {{banyak_jenis_item}}</h7><br>
-    <h7>Kamu menyimpan {{banyak_item}} item pada aplikasi ini</h7>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Description</th>
-            
-            <th>Add</th>
-            <th>Sub</th>
-            <th>Delete</th>
-        </tr>
+    <h7>Banyak Jenis Item : {{ banyak_jenis_item }}</h7><br>
+    <h7>Kamu menyimpan {{ banyak_item }} item pada aplikasi ini</h7>
     
-        {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
-    
-        {% for product in products %}
-            <tr>
-                <td>{{product.name}}</td>
-                <td>{{product.amount}}</td>
-                <td>{{product.description}}</td>
-				<td>
-                    <form method="post" action="{% url 'main:add_amount' product.id %}">
-                         {% csrf_token %}
-                         <button type="submit">Tambah</button>
-                    </form>
-                </td>
-                <td>
-                    <form method="post" action="{% url 'main:sub_amount' product.id %}">
-                         {% csrf_token %}
-                         <button type="submit">Kurang</button>
-                    </form>
-                </td>
-                <td>
-                    <form method="post" action="{% url 'main:delete_item' product.id %}">
-                         {% csrf_token %}
-                         <button type="submit">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-    
+    <div class="container mt-4">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">Amount: {{ product.amount }}</p>
+                            <p class="card-text">{{ product.description }}</p>
+                            <form method="post" action="{% url 'main:add_amount' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Tambah</button>
+                            </form>
+                            <form method="post" action="{% url 'main:sub_amount' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">Kurang</button>
+                            </form>
+                            <form method="post" action="{% url 'main:delete_item' product.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Hapus</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                {% if forloop.last %}
+                    <!-- Apply different styling to the last row of each item -->
+                    <style>
+                        .card:last-child .card-body {
+                            background-color: orange; /* Example background color */
+                        }
+                    </style>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
     <br />
-    
-    <a href="{% url 'main:create_product' %}">
-        <button>
-            Add New Product
-        </button>
-    </a>
-    
+
+    <a href="{% url 'main:create_product' %}" class="btn btn-success">Add New Product</a>
+
     <br />
-    
-    <a href="{% url 'main:logout' %}">
-    <button>
-        Logout
-    </button>
-	</a>
-	
-	<h5>Sesi terakhir login: {{ last_login }}</h5>
+
+    <a href="{% url 'main:logout' %}" class="btn btn-danger">Logout</a>
+
+    <h5>Sesi terakhir login: {{ last_login }}</h5>
 {% endblock content %}
-

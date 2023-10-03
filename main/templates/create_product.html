@@ -1,19 +1,35 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
 {% block content %}
-<h1>Add New Item</h1>
-
-<form method="POST">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-        <tr>
-            <td></td>
-            <td>
-                <input type="submit" value="Add Item"/>
-            </td>
-        </tr>
-    </table>
-</form>
-
+<div class="container">
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+        <div class="col-md-6">
+            <h1 class="text-center">Add New Item</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="{{ form.name.id_for_label }}" class="col-sm-3 col-form-label">{{ form.name.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.name }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.amount.id_for_label }}" class="col-sm-3 col-form-label">{{ form.amount.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.amount }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.description.id_for_label }}" class="col-sm-3 col-form-label">{{ form.description.label }}</label>
+                    <div class="col-sm-9">
+                        {{ form.description }}
+                    </div>
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" value="Add Item" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
