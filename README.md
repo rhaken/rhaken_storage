@@ -1,3 +1,72 @@
+# Tugas 5
+## Implementasi
+Pada implementasi, saya memilih untuk menggunakan framework bootstrap.
+
+Beberapa komponen bootstrap pada page `main` yang saya gunakan adalah.
+
+### Login:
+
+Halaman login telah diperbarui untuk menciptakan tampilan yang lebih terpusat baik secara vertikal maupun horizontal. Ini membuat tampilannya lebih menarik dan lebih baik untuk pengguna.
+Sekarang, label dan bidang masukan pada formulir login disusun dalam dua kolom yang terlihat rapi. Kolom pertama untuk label, sementara kolom kedua untuk bidang masukan. Ini mempermudah pengguna untuk melihat dan mengisi formulir.
+Selain itu, ada jarak vertikal yang ditambahkan setelah setiap bidang masukan dengan menggunakan jeda baris (<br>) agar tampilannya tidak terlalu padat.
+Halaman Pendaftaran (Register Page):
+
+### Register:
+
+Halaman pendaftaran juga telah diperbarui dengan peningkatan tampilan yang mencakup penataan yang lebih baik baik secara vertikal maupun horizontal. Ini membuat halaman terlihat lebih menarik dan lebih mudah dinavigasi.
+Pada formulir pendaftaran, label dan bidang masukan disusun dalam dua kolom yang terlihat rapi. Hal ini memudahkan pengguna dalam mengisi formulir dengan jelas.
+Kami juga menambahkan jarak vertikal dengan menggunakan jeda baris (<br>) setelah setiap bidang masukan agar tampilannya lebih teratur.
+Formulir "Tambah Item Baru" (Add New Item Form):
+
+### create_product:
+
+Formulir "Tambah Item Baru" sekarang tampil lebih teratur dengan penempatan yang tepat baik secara vertikal maupun horizontal. Ini dilakukan untuk memastikan pengalaman yang lebih baik.
+Tampilan formulir ini responsif, artinya akan menyesuaikan ukuran layar. Setiap kolom untuk memasukkan data ditempatkan sejajar dengan labelnya, sehingga tampilannya lebih seimbang.
+Untuk membuat tampilan lebih rapi dan sejajar secara horizontal, jeda baris tidak lagi digunakan
+
+### Main:
+
+Pada halaman "main," yang menggambarkan halaman inventaris, kartu Bootstrap telah ditambahkan untuk menampilkan setiap item atau produk secara lebih menarik secara visual.
+Setiap produk sekarang ditampilkan dalam komponen kartu Bootstrap tersendiri, memberikan tampilan yang terstruktur dan terorganisir untuk menampilkan informasi produk.
+Di dalam setiap kartu, nama produk, jumlah, dan deskripsi produk ditampilkan secara terpisah, memberikan bagian yang jelas dan terpisah untuk setiap informasi.
+Tiga tombol, yaitu "Tambah," "Kurang," dan "Hapus," telah disertakan di dalam setiap kartu untuk memungkinkan pengguna melakukan tindakan pada setiap produk.
+Tombol-tombol ini di-styling dengan kelas tombol Bootstrap (btn btn-primary, btn btn-warning, dan btn btn-danger) untuk antarmuka yang konsisten dan ramah pengguna.
+Tata letak kartu tersebut responsif dan menyesuaikan dengan berbagai ukuran layar, sehingga cocok untuk berbagai perangkat dan resolusi layar.
+Baris terakhir dari setiap kartu, yang mencakup tombol-tombol ("Tambah," "Kurang," dan "Hapus"), memiliki warna latar belakang yang berbeda (orange) untuk membedakannya dari bagian kartu lainnya dan menarik perhatian ke tombol aksi.
+Secara keseluruhan, penambahan kartu Bootstrap meningkatkan presentasi informasi produk dan memberikan cara yang terorganisir dan menyenangkan secara visual bagi pengguna untuk berinteraksi dengan item inventaris. Pengguna dapat dengan mudah mengidentifikasi setiap produk dan melakukan tindakan pada mereka.
+
+
+## Manfaat Element Sector dan Waktu Penggunaannya
+### 1. Element Sector
+Selector elemen digunakan untuk memilih semua elemen dengan jenis tertentu dalam dokumen HTML. Ini berguna ketika Anda ingin menerapkan gaya yang sama ke semua elemen dari jenis yang sama dalam dokumen.
+### 2. ID Selector
+Selector ID digunakan untuk memilih elemen berdasarkan atribut id yang bersifat unik. Ini berguna ketika Anda perlu mengacu pada elemen tertentu dalam dokumen dan memastikan bahwa elemen tersebut memiliki id yang hanya ada satu di dalam dokumen tersebut.
+### 3. Class Selector
+Selector kelas digunakan untuk memilih elemen berdasarkan atribut kelas yang telah ditentukan. Penggunaan ini berguna ketika Anda ingin menerapkan gaya atau fungsi yang serupa pada beberapa elemen dalam dokumen.
+
+## HTML5 Tag
+HTML5 adalah versi terbaru dari bahasa markup HTML (Hypertext Markup Language) yang digunakan untuk membuat halaman web. HTML5 menyediakan sejumlah tag (elemen) baru yang memungkinkan saya untuk membuat konten website yang lebih interaktif.
+
+`<header>`: Untuk bagian atas halaman web, seperti judul dan logo.
+
+`<nav>`: Untuk menu navigasi dalam halaman web.
+
+`<section>`: Menandai bagian konten yang berdiri sendiri.
+
+`<article>`:  Untuk mengelompokkan konten yang berdiri sendiri.
+
+`<video>`: Untuk menyisipkan pemutaran video ke dalam halaman web.
+
+## Perbedaan antara _margin_ dan _padding_
+Margin dan padding memiliki fungsi yang sama dalam mengatur tata letak, namun perbedaan utamanya adalah bagaimana mereka mengatur ruang. Margin adalah ruang di luar batas elemen tersebut yang memisahkannya dari elemen-elemen sekitarnya, sedangkan padding adalah ruang di dalam batas elemen tersebut, yang berada antara kontennya dan batasnya sendiri. Selain itu, perlu dicatat bahwa margin dapat berdampak pada tata letak elemen-elemen di seluruh halaman web, sementara padding hanya memengaruhi tata letak elemen itu sendiri tanpa memengaruhi elemen-elemen di luarnya.
+
+## Perbedaan _framework_ CSS Tailwind dan Bootstrap
+Bootstrap adalah suatu framework CSS yang lebih tradisional yang menawarkan berbagai komponen siap pakai seperti tombol, jumbotron, dan menu navigasi, sehingga mempermudah dalam pengembangan web yang cepat. Bootstrap memiliki gaya bawaan yang khas yang dapat menghasilkan desain yang serupa di banyak situs web.
+
+Sementara itu, Tailwind CSS adalah suatu kerangka kerja CSS yang lebih modern dan berbasis pada kelas utilitas. Ketika Anda menggunakan Tailwind, Anda menggabungkan kelas-kelas yang telah ditentukan sebelumnya untuk mengatur tata letak, warna, dan gaya elemen-elemen. Pendekatan ini memberikan fleksibilitas yang besar dan memungkinkan Anda mengontrol setiap aspek desain dengan sangat rinci.
+
+Jadi, secara singkat, Anda bisa menggunakan Bootstrap jika ingin pengembangan web yang cepat dengan desain yang seragam, dan Anda dapat memilih Tailwind jika Anda ingin fleksibilitas maksimum dalam menentukan desain situs web Anda.
+
 # tugas 4
 ### 1. Membuat Fungsi Registrasi
 Dengan memanfaatkan UserCreationForm bawaan django, pengguna baru dapat mendaftar dengan mudah di situs web Anda tanpa harus menulis kode dari awal. dengan membuat fungsi untuk register seperti dibawah
