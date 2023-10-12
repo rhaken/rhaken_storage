@@ -9,45 +9,7 @@
     <h5>Class:</h5>
     <p>{{ class }}</p>
 
-    <h7>Banyak Jenis Item : {{ banyak_jenis_item }}</h7><br>
-    <h7>Kamu menyimpan {{ banyak_item }} item pada aplikasi ini</h7>
-    
-    <div class="container mt-4">
-        <div class="row">
-            {% for product in products %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ product.name }}</h5>
-                            <p class="card-text">Amount: {{ product.amount }}</p>
-                            <p class="card-text">{{ product.description }}</p>
-                            <form method="post" action="{% url 'main:add_amount' product.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary">Tambah</button>
-                            </form>
-                            <form method="post" action="{% url 'main:sub_amount' product.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-warning">Kurang</button>
-                            </form>
-                            <form method="post" action="{% url 'main:delete_item' product.id %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-danger">Hapus</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                
-                {% if forloop.last %}
-                    <!-- Apply different styling to the last row of each item -->
-                    <style>
-                        .card:last-child .card-body {
-                            background-color: orange; /* Example background color */
-                        }
-                    </style>
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>
+    <div class="row" id="product_container"></div> <!-- Container for Bootstrap cards -->
 
     <br />
 
@@ -56,6 +18,90 @@
     <br />
 
     <a href="{% url 'main:logout' %}" class="btn btn-danger">Logout</a>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for "amount" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Product by AJAX</button>
+
+    <script>
+        async function getProducts() {
+            return fetch("{% url 'main:get_product_json' %}", {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).then((res) => res.json());
+        }
+
+        async function refreshProducts() {
+            const productContainer = document.getElementById("product_container");
+            productContainer.innerHTML = "";
+
+            const products = await getProducts();
+
+            products.forEach((item) => {
+                // Create a Bootstrap card for each product
+                const card = document.createElement("div");
+                card.classList.add("col-4"); // Adjust the column size as needed
+
+                card.innerHTML = `
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.fields.name}</h5>
+                            <p class="card-text">Amount: ${item.fields.amount}</p>
+                            <p class="card-text">Description: ${item.fields.description}</p>
+                        </div>
+                    </div>
+                `;
+
+                productContainer.appendChild(card);
+            });
+        }
+
+        refreshProducts();
+
+        function addProduct() {
+            fetch("{% url 'main:add_product_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts);
+
+            document.getElementById("form").reset();
+            return false;
+        }
+
+        document.getElementById("button_add").onclick = addProduct;
+    </script>
 
     <h5>Sesi terakhir login: {{ last_login }}</h5>
 {% endblock content %}
