@@ -1,3 +1,145 @@
+# Tugas 6
+## Implementasi
+### 1. Membuat Fungsi Create Products, Get Products, Item Menggunakan AJAX
+```javascript
+async function getProducts() {
+    return fetch("{% url 'main:get_product_json' %}", {
+        method: 'GET',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    }).then((res) => res.json());
+    }
+
+function addProduct() {
+    fetch("{% url 'main:add_product_ajax' %}", {
+        method: "POST",
+        body: new FormData(document.querySelector('#form'))
+    }).then(refreshProducts);
+
+    document.getElementById("form").reset();
+    return false;
+}
+document.getElementById("button_add").onclick = addProduct;
+
+```
+
+Lalu di views.py definisikan fungsinya
+```python
+@csrf_exempt
+def add_product_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_product = Item(name=name, amount=amount, description=description, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()
+
+def get_product_json(request):
+    product_item = Item.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', product_item))
+```
+
+Tambahkan juga masing-masing path pada `urls.py`
+
+### 2. Membuat Script untuk Menampilkan Item
+```javascript
+async function refreshProducts() {
+    const productContainer = document.getElementById("product_container");
+    productContainer.innerHTML = "";
+
+    const products = await getProducts();
+
+    products.forEach((item) => {
+        // Create a Bootstrap card for each product
+        const card = document.createElement("div");
+        card.classList.add("col-4"); // Adjust the column size as needed
+
+        card.innerHTML = `
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">${item.fields.name}</h5>
+                    <p class="card-text">Amount: ${item.fields.amount}</p>
+                    <p class="card-text">Description: ${item.fields.description}</p>
+                </div>
+            </div>
+        `;
+
+        productContainer.appendChild(card);
+    });
+}
+```
+
+merubah `main.html`, bagian menampilkan card menjadi `<div class="row" id="product_container"></div> `.
+
+### 3. Membuat Modal Form dalam Menambahkan Item
+```javascript
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="col-form-label">Amount:</label>
+                        <input type="number" class="form-control" id="amount" name="amount"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Item</button>
+            </div>
+        </div>
+    </div>
+</div>
+```
+
+menambahkan button add item by AJAX yang baru
+```javascript
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Item by AJAX</button>
+```
+
+
+
+## Perbedaan _Asynchronous Programming_ dengan _Synchronous Programming_
+Pemrograman asinkron dan pemrograman sinkron adalah dua metode utama dalam pengembangan perangkat lunak yang memiliki perbedaan signifikan dalam pengelolaan dan eksekusi tugas. Dalam pemrograman asinkron, tugas-tugas dieksekusi secara berurutan, yang berarti setiap tugas harus menunggu tugas sebelumnya untuk selesai sebelum dapat dimulai. Situasi ini dapat mengakibatkan kinerja aplikasi yang kurang responsif, terutama saat menangani tugas yang memakan waktu lama seperti operasi jaringan atau berkas.
+
+Di sisi yang berlawanan, pemrograman asinkron memungkinkan tugas-tugas untuk berjalan secara mandiri tanpa harus menunggu satu sama lain. Akibatnya, aplikasi dapat menjalankan tugas-tugas lain sambil menunggu penyelesaian tugas yang memerlukan waktu lebih lama. Ini menghasilkan peningkatan responsivitas dan efisiensi aplikasi, terutama dalam situasi di mana ada banyak operasi non-blocking yang perlu dijalankan, seperti yang sering terjadi dalam aplikasi web yang harus menangani sejumlah besar permintaan dari pengguna. Pemrograman asinkron sering melibatkan penggunaan konsep seperti callback, promise, atau async/await untuk mengelola eksekusi tugas-tugas tanpa menghalangi pemrosesan utama.
+
+## Paradigma Event-driven Programming
+Event-driven adalah jenis pendekatan dalam pengembangan perangkat lunak yang serupa dengan pemanfaatan event listener dalam bahasa seperti Java. Implementasi paradigma pemrograman event-driven dalam JavaScript memungkinkan pengembang untuk menentukan tindakan atau fungsi yang akan dijalankan saat terjadi sebuah peristiwa, tanpa harus menjalankan kode secara berurutan. Sebagai contoh, ketika seorang pengguna melakukan klik pada sebuah tombol, JavaScript dapat merespons dengan menjalankan kode yang telah ditentukan untuk menangani peristiwa tersebut. Dengan demikian, paradigma ini memungkinkan pembuatan aplikasi web yang interaktif dan dinamis, di mana respons terhadap peristiwa pengguna dapat diprogram dengan fleksibilitas dan efisiensi.
+
+Contohnya :  tombol yang akan menjalankan suatu tindakan saat ditekan, seperti tombol "Tambah Item melalui AJAX," yang akan memicu fungsi addItem saat ditekan.
+
+## Penerapan Asynchronous Programming pada AJAX
+Asynchronous programming pada AJAX (Asynchronous JavaScript and XML) adalah teknik yang digunakan untuk mengirim dan menerima data dari server web tanpa menghentikan atau memblokir eksekusi kode JavaScript di browser. Saat sebuah permintaan (request) AJAX dikirim ke server, JavaScript dapat melanjutkan eksekusi kode lainnya tanpa harus menunggu respon dari server. Ketika respon dari server tiba, JavaScript akan menjalankan callback function yang telah ditentukan, memungkinkan tindakan-tindakan selanjutnya seperti pembaruan tampilan atau manipulasi data. Ini adalah prinsip fundamental dalam pemrograman berbasis peristiwa (event-driven programming) yang sangat berguna dalam pengembangan aplikasi web yang responsif. Dengan menggunakan AJAX, pengguna dapat berinteraksi dengan situs web tanpa harus menunggu lama untuk setiap permintaan server selesai diproses, yang akan meningkatkan pengalaman pengguna secara keseluruhan.
+
+## Penerapan AJAX Menggunakan Fetch API vs Library JQuery
+Penerapan AJAX dengan menggunakan Fetch API dan jQuery adalah dua pendekatan yang berbeda dalam mengirim permintaan HTTP asynchronous ke server dan memanipulasi data yang diterima. Pilihan antara keduanya tergantung pada kebutuhan proyek dan preferensi pengembang.
+
+Fetch API adalah bagian dari JavaScript modern yang menawarkan antarmuka yang kuat untuk mengelola permintaan HTTP. Ia lebih ringan daripada jQuery, memungkinkan pengembang untuk mengirim permintaan dan mengelola respons dengan lebih langsung. Fetch API mendukung Promise, yang membuatnya mudah untuk menangani respons async dan chaining berbagai operasi, serta mengintegrasikan lebih baik dengan ES6 dan ekosistem JavaScript modern. Namun, implementasi dan penggunaannya mungkin sedikit lebih rumit daripada jQuery untuk pengembang yang belum terbiasa dengan aspek-aspek ini.
+
+Sebaliknya, jQuery adalah perpustakaan JavaScript yang telah lama ada dan cukup populer. Ia menyediakan antarmuka yang lebih sederhana dan mudah digunakan untuk AJAX, dengan banyak fitur dan fungsi yang telah siap digunakan. Ini memungkinkan pengembang untuk mengirim permintaan AJAX dengan lebih sedikit kode. Namun, karena itu menyediakan banyak fitur yang mungkin tidak digunakan dalam proyek tertentu, ini bisa mempengaruhi kinerja dan memuat waktu aplikasi web.
+
 # Tugas 5
 ## Implementasi
 Pada implementasi, saya memilih untuk menggunakan framework bootstrap.
